@@ -1,0 +1,29 @@
+#!/usr/bin/env sh
+. "$(dirname "$0")/_/husky.sh"
+
+echo '🚧 Aplicando ESLint y Prettier'
+
+# ESLint
+npm run lint ||
+(
+  echo '🚫 No puedes continuar sin antes corrgir los errores!';
+  false;
+)
+
+# Prettier
+npm run format ||
+(
+  echo '🚨 Aplica formato al código!';
+  false;
+)
+
+# Verificamos si existen nuevos cambios despues del formato
+if [ -n "$(git diff)" ]; then
+  echo '🎨 Aplicando formato al código. Añadiendo los archivos:';
+  git status -s
+  git add .
+fi
+
+echo '';
+echo '✅ Listo para subir cambios';
+echo '';
