@@ -35,25 +35,11 @@ onMounted(() => {
 		container: 'viewDiv' // Div element
 	})
 
-	/**
-	 * ? Agregar Capa Grafica
-	 * Una capa gráfica es un contenedor de gráficos.
-	 * Se utiliza con una vista de mapa para mostrar gráficos en un mapa.
-	 * Puede añadir más de una capa de gráficos a una vista de mapa.
-	 * Las capas de gráficos se muestran encima de todas las demás capas.
-	 */
+	// Agregar Capa Grafica
 	const graphicsLayer = new GraphicsLayer()
 	map.add(graphicsLayer)
 
-	/**
-	 * ? Agregar un punto grafico
-	 * Un gráfico de puntos se crea utilizando un punto y un símbolo de marcador.
-	 * Un punto se define con coordenadas de longitud (x) y latitud (y), y un símbolo simple se define con un color y un contorno.
-	 * Las clases Point y SimpleMarkerSymbol se utilizan para crear el gráfico de puntos.
-	 *
-	 * Ref: [Point](https://developers.arcgis.com/javascript/latest/api-reference/esri-geometry-Point.html)
-	 * Ref: [SimpleMarkerSymbol](https://developers.arcgis.com/javascript/latest/api-reference/esri-symbols-SimpleMarkerSymbol.html)
-	 */
+	// Agrega un grafico de Punto
 	const point = {
 		// Creando el punto
 		type: 'point',
@@ -78,14 +64,7 @@ onMounted(() => {
 	})
 	graphicsLayer.add(pointGraphic)
 
-	/**
-	 * ? Agrega un grafico de Linea
-	 * Un gráfico de líneas se crea utilizando una polilínea y un símbolo de línea.
-	 * Una polilínea se define como una secuencia de puntos y una referencia espacial.
-	 * Las clases Polyline y SimpleLineSymbol se utilizan para crear un gráfico de líneas.
-	 */
-
-	// Create a line geometry
+	// Agrega un grafico de Linea
 	const polyline = {
 		type: 'polyline',
 		paths: [
@@ -103,25 +82,14 @@ onMounted(() => {
 		width: 2
 	}
 
-	/**
-	 * Crea un gráfico y establece las propiedades de geometría y símbolo.
-	 * La clase Graphic emitirá automáticamente la polilínea y el símbolo simpleLineSymbol cuando se cree.
-	 */
+	// Crea un gráfico y establece las propiedades de geometría y símbolo.
 	const polylineGraphic = new Graphic({
 		geometry: polyline as esri.Polyline,
 		symbol: simpleLineSymbol
 	})
 	graphicsLayer.add(polylineGraphic)
 
-	/**
-	 * ? Agregar un grafico poligonal
-	 * Un gráfico poligonal se crea utilizando un polígono y un símbolo de relleno.
-	 * Un polígono se define como una secuencia de puntos (anillo) que describen
-	 * un límite cerrado y una referencia espacial.
-	 * Las clases Polygon y SimpleFillSymbol se utilizan para crear y mostrar un gráfico de polígono.
-	 */
-
-	// Create a polygon geometry
+	// Agregar un grafico poligonal
 	const polygon = {
 		type: 'polygon',
 		rings: [
@@ -144,13 +112,34 @@ onMounted(() => {
 		}
 	}
 
+	// Crear una ventana emergente
+
 	/**
-	 * Crea un gráfico y establece las propiedades de geometría y símbolo.
-	 * La clase Graphic emitirá automáticamente el polígono y simpleFillSymbol cuando se cree.
+	 * Puede mostrar una ventana emergente para un gráfico cuando se hace clic sobre él.
+	 * El código que crea el gráfico poligonal para mostrar una ventana emergente
+	 * con el nombre y la descripción del gráfico utiliza las propiedades attribute y popupTemplate.
 	 */
+	const popupTemplate = {
+		title: '{Name}',
+		content: '{Description}'
+	}
+
+	const attributes = {
+		Name: 'Graphic',
+		Description: 'I am a polygon'
+	}
+
+	/**
+	 * Actualiza el polygonGraphic para incluir el popupTemplate y las propiedades de los atributos.
+	 */
+
+	// Crea un gráfico y establece las propiedades de geometría y símbolo.
 	const polygonGraphic = new Graphic({
 		geometry: polygon as esri.Polygon,
-		symbol: simpleFillSymbol
+		symbol: simpleFillSymbol,
+
+		attributes,
+		popupTemplate
 	})
 	graphicsLayer.add(polygonGraphic)
 })
