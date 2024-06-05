@@ -77,6 +77,82 @@ onMounted(() => {
 		symbol: simpleMarkerSymbol
 	})
 	graphicsLayer.add(pointGraphic)
+
+	/**
+	 * ? Agrega un grafico de Linea
+	 * Un gráfico de líneas se crea utilizando una polilínea y un símbolo de línea.
+	 * Una polilínea se define como una secuencia de puntos y una referencia espacial.
+	 * Las clases Polyline y SimpleLineSymbol se utilizan para crear un gráfico de líneas.
+	 */
+
+	// Create a line geometry
+	const polyline = {
+		type: 'polyline',
+		paths: [
+			[
+				[-118.821527826096, 34.0139576938577], // Longitude, Latitude
+				[-118.814893761649, 34.0080602407843], // Longitude, Latitude
+				[-118.808878330345, 34.0016642996246] // Longitude, Latitude
+			]
+		]
+	}
+
+	const simpleLineSymbol = {
+		type: 'simple-line',
+		color: [226, 119, 40], // Orange
+		width: 2
+	}
+
+	/**
+	 * Crea un gráfico y establece las propiedades de geometría y símbolo.
+	 * La clase Graphic emitirá automáticamente la polilínea y el símbolo simpleLineSymbol cuando se cree.
+	 */
+	const polylineGraphic = new Graphic({
+		geometry: polyline as esri.Polyline,
+		symbol: simpleLineSymbol
+	})
+	graphicsLayer.add(polylineGraphic)
+
+	/**
+	 * ? Agregar un grafico poligonal
+	 * Un gráfico poligonal se crea utilizando un polígono y un símbolo de relleno.
+	 * Un polígono se define como una secuencia de puntos (anillo) que describen
+	 * un límite cerrado y una referencia espacial.
+	 * Las clases Polygon y SimpleFillSymbol se utilizan para crear y mostrar un gráfico de polígono.
+	 */
+
+	// Create a polygon geometry
+	const polygon = {
+		type: 'polygon',
+		rings: [
+			[
+				[-118.818984489994, 34.0137559967283], // Longitude, latitude
+				[-118.806796597377, 34.0215816298725], // Longitude, latitude
+				[-118.791432890735, 34.0163883241613], // Longitude, latitude
+				[-118.79596686535, 34.008564864635], // Longitude, latitude
+				[-118.808558110679, 34.0035027131376] // Longitude, latitude
+			]
+		]
+	}
+
+	const simpleFillSymbol = {
+		type: 'simple-fill',
+		color: [227, 139, 79, 0.8], // Orange, opacity 80%
+		outline: {
+			color: [255, 255, 255],
+			width: 1
+		}
+	}
+
+	/**
+	 * Crea un gráfico y establece las propiedades de geometría y símbolo.
+	 * La clase Graphic emitirá automáticamente el polígono y simpleFillSymbol cuando se cree.
+	 */
+	const polygonGraphic = new Graphic({
+		geometry: polygon as esri.Polygon,
+		symbol: simpleFillSymbol
+	})
+	graphicsLayer.add(polygonGraphic)
 })
 </script>
 
